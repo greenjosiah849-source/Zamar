@@ -1,0 +1,105 @@
+<Window x:Class="ZamarStudio.Views.StudioMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Zamar Studio - Game Editor" Height="800" Width="1400"
+        Background="#0f172a"
+        Foreground="White">
+    <Grid>
+        <!-- Menu Bar -->
+        <DockPanel VerticalAlignment="Top" Height="50" Background="#1e293b">
+            <!-- Toolbar -->
+            <StackPanel x:Name="ToolbarStackPanel"
+                       Orientation="Horizontal"
+                       DockPanel.Dock="Left"
+                       Margin="10,0"
+                       VerticalAlignment="Center">
+                <Button Content="Save" Click="SaveProject_Click" Padding="10,5" Background="#06b6d4" Foreground="Black" FontWeight="Bold" Margin="0,0,5,0"/>
+                <Button Content="Load" Click="LoadProject_Click" Padding="10,5" Background="#06b6d4" Foreground="Black" FontWeight="Bold" Margin="0,0,5,0"/>
+                <Separator Width="2" Margin="10,0"/>
+                <Button Content="Play Test" Click="PlayTest_Click" Padding="10,5" Background="#10b981" Foreground="Black" FontWeight="Bold" Margin="0,0,5,0"/>
+                <Button Content="Publish" Click="PublishProject_Click" Padding="10,5" Background="#f59e0b" Foreground="Black" FontWeight="Bold"/>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Main Editor Area -->
+        <Grid Margin="0,50,0,0">
+            <!-- Left Panel - Part Selection -->
+            <Grid Column="0" Width="300" HorizontalAlignment="Left" Background="#1e293b">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+
+                <!-- Part Tools -->
+                <TextBlock Grid.Row="0" Text="Parts Toolbox" Padding="10" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
+
+                <!-- Parts List -->
+                <Border Grid.Row="1" Background="#0f172a" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="Scene" Padding="10,5" FontSize="12" Foreground="#94a3b8"/>
+                        <ListBox x:Name="PartsList" Background="#0f172a" Foreground="White" BorderThickness="0" Margin="5">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Padding="10,5"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+
+                <!-- Scripts List -->
+                <Border Grid.Row="2" Background="#0f172a" Margin="5">
+                    <StackPanel>
+                        <TextBlock Text="Scripts" Padding="10,5" FontSize="12" Foreground="#94a3b8"/>
+                        <ListBox x:Name="ScriptsList" Background="#0f172a" Foreground="White" BorderThickness="0" Margin="5">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Padding="10,5"/>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <!-- Center - 3D Viewport -->
+            <Border HorizontalAlignment="Center" VerticalAlignment="Stretch" 
+                   Margin="300,0,400,0" Background="#1e293b">
+                <Grid>
+                    <Canvas Background="#0f172a" Name="ViewportCanvas"/>
+                    <TextBlock Text="3D Viewport (Placeholder)" 
+                              VerticalAlignment="Center" HorizontalAlignment="Center" 
+                              Foreground="#64748b" FontSize="16"/>
+                    <TextBlock Text="WebGL 3D preview would render here" 
+                              VerticalAlignment="Bottom" HorizontalAlignment="Center" 
+                              Foreground="#64748b" FontSize="12" Margin="0,0,0,20"/>
+                </Grid>
+            </Border>
+
+            <!-- Right Panel - Properties -->
+            <Grid Column="2" Width="400" HorizontalAlignment="Right" Background="#1e293b">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Properties Header -->
+                <TextBlock Grid.Row="0" Text="Properties" Padding="10" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
+
+                <!-- Properties Panel -->
+                <ScrollViewer Grid.Row="1" Background="#0f172a" Margin="5">
+                    <StackPanel x:Name="PropertiesPanel" Margin="10"/>
+                </ScrollViewer>
+
+                <!-- Script Editor -->
+                <Border Grid.Row="2" Background="#0f172a" Margin="5">
+                    <ScrollViewer>
+                        <StackPanel x:Name="ScriptEditorPanel" Margin="10"/>
+                    </ScrollViewer>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

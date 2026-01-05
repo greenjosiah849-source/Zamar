@@ -1,0 +1,115 @@
+<Window x:Class="ZamarPlayer.Views.LauncherWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Zamar Player - Launcher" Height="900" Width="1400"
+        Background="#191923" Foreground="#FFFFFF"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="False">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- LEFT SIDEBAR -->
+        <Border Grid.Column="0" Background="#0f1219" BorderBrush="#1a1f3a" BorderThickness="0,0,1,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="15">
+                    <!-- Logo -->
+                    <TextBlock Text="⚡ ZAMAR" FontSize="22" FontWeight="Bold" Foreground="#00D7FF" Margin="0,0,0,30"/>
+
+                    <!-- User Info -->
+                    <Border Style="{StaticResource Card}" Margin="0,0,0,20">
+                        <StackPanel>
+                            <TextBlock Text="👤 USER" Style="{StaticResource CaptionText}"/>
+                            <TextBlock x:Name="UserDisplayName" Text="Loading..." Style="{StaticResource BodyText}" Margin="0,5,0,0"/>
+                            <TextBlock x:Name="UserStatus" Text="🟢 Online" Style="{StaticResource BodyText}" Foreground="#00FF00" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Navigation -->
+                    <TextBlock Text="🎮 GAMES" Style="{StaticResource CaptionText}" Margin="0,0,0,10"/>
+                    <Button Content="🏠 Home" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,5" Click="Home_Click"/>
+                    <Button Content="🔥 Featured" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,5" Click="Featured_Click"/>
+                    <Button Content="❤️ Favorites" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,5" Click="Favorites_Click"/>
+                    <Button Content="⏱️ Recent" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,20" Click="Recent_Click"/>
+
+                    <!-- Account -->
+                    <TextBlock Text="👥 ACCOUNT" Style="{StaticResource CaptionText}" Margin="0,0,0,10"/>
+                    <Button Content="🎨 Avatar" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,5" Click="Avatar_Click"/>
+                    <Button Content="📦 Inventory" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,5" Click="Inventory_Click"/>
+                    <Button Content="🏆 Achievements" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,5" Click="Achievements_Click"/>
+                    <Button Content="⚙️ Settings" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,5" Click="Settings_Click"/>
+                    <Button Content="🚪 Sign Out" Style="{StaticResource SecondaryButton}" Width="250" HorizontalAlignment="Left" Margin="0,0,0,0" Click="SignOut_Click"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- MAIN CONTENT -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- TOP BAR -->
+            <Border Grid.Row="0" Background="#1a1f3a" BorderBrush="#00D7FF" BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                    <TextBlock x:Name="PageTitle" Text="🎮 Featured Games" FontSize="20" FontWeight="Bold" Foreground="#00D7FF"/>
+                    <TextBlock x:Name="PageSubtitle" Text="Play with millions of players worldwide" Style="{StaticResource BodyText}" Margin="20,0,0,0" VerticalAlignment="Center"/>
+                    <Button Content="🔄 Refresh" Style="{StaticResource NavButton}" Margin="Auto,0,20,0" Click="Refresh_Click"/>
+                </StackPanel>
+            </Border>
+
+            <!-- CONTENT AREA -->
+            <Grid Grid.Row="1" Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Search & Filter -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
+                    <TextBox x:Name="SearchBox" Width="300" Padding="10" Background="#1a1f3a" Foreground="White" 
+                             BorderBrush="#333" BorderThickness="1" Text="" KeyDown="SearchBox_KeyDown"/>
+                    <Button Content="🔍 Search" Style="{StaticResource PrimaryButton}" Margin="10,0,0,0" Click="Search_Click"/>
+                    <Button Content="🌐 Servers" Style="{StaticResource SecondaryButton}" Margin="10,0,0,0" Click="ServersDialog_Click"/>
+                </StackPanel>
+
+                <!-- Games Grid -->
+                <ListBox x:Name="GamesListBox" Grid.Row="1" Style="{StaticResource ModernListBox}" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#1a1f3a" Margin="0,0,0,15" Padding="15" BorderBrush="#333" BorderThickness="1" CornerRadius="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="120"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="150"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Thumbnail -->
+                                    <Rectangle Grid.Column="0" Width="120" Height="120" Fill="#0f1219" Margin="0,0,15,0"/>
+
+                                    <!-- Game Info -->
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Foreground="#00D7FF"/>
+                                        <TextBlock Text="{Binding Description}" Style="{StaticResource BodyText}" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                                            <TextBlock Text="👤 " Foreground="#888"/>
+                                            <TextBlock Text="{Binding Players}" Foreground="#00FF00" FontWeight="Bold"/>
+                                            <TextBlock Text=" players online" Style="{StaticResource BodyText}" Margin="5,0,0,0"/>
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <!-- Play Button -->
+                                    <Button Grid.Column="2" Content="▶ PLAY" Style="{StaticResource PrimaryButton}" VerticalAlignment="Center" Click="PlayGame_Click"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,296 @@
+<Window x:Class="ZamarStudio.Views.CompleteModerationDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Zamar Moderation Dashboard" Height="900" Width="1400"
+        Background="#1E1E1E" Foreground="#E0E0E0"
+        WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/Resources/zamar-icon.png">
+
+    <Window.Resources>
+        <!-- Color Definitions -->
+        <SolidColorBrush x:Key="BackgroundBrush" Color="#1E1E1E"/>
+        <SolidColorBrush x:Key="CardBrush" Color="#252526"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#007ACC"/>
+        <SolidColorBrush x:Key="SuccessBrush" Color="#4EC9B0"/>
+        <SolidColorBrush x:Key="WarningBrush" Color="#DCDCAA"/>
+        <SolidColorBrush x:Key="ErrorBrush" Color="#F48771"/>
+
+        <!-- Button Style -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="12,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#005A9E"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#3E3E42"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="16"/>
+            <Setter Property="Margin" Value="8"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="#252526" Padding="20" BorderThickness="0,0,0,1" BorderBrush="#3E3E42">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Vertical" Grid.Column="0">
+                    <TextBlock Text="Zamar Moderation Dashboard" FontSize="24" FontWeight="Bold" Foreground="#E0E0E0"/>
+                    <TextBlock Text="Real-time moderation and case management" FontSize="12" Foreground="#858585" Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center">
+                    <Button Content="⟳ Refresh" Style="{StaticResource ModernButton}" Click="OnRefreshClick"/>
+                    <Button Content="⚙ Settings" Style="{StaticResource ModernButton}" Background="#6A9955" Click="OnSettingsClick"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Statistics Bar -->
+        <Border Grid.Row="1" Background="#252526" Padding="20" BorderThickness="0,0,0,1" BorderBrush="#3E3E42">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Stat Cards -->
+                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <TextBlock Text="Total Cases" FontSize="11" Foreground="#858585"/>
+                    <TextBlock Text="{Binding TotalCases}" FontSize="20" FontWeight="Bold" Foreground="#E0E0E0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <TextBlock Text="Pending Review" FontSize="11" Foreground="#858585"/>
+                    <TextBlock Text="{Binding PendingCases}" FontSize="20" FontWeight="Bold" Foreground="#DCDCAA"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Vertical">
+                    <TextBlock Text="Active Bans" FontSize="11" Foreground="#858585"/>
+                    <TextBlock Text="{Binding ActiveBans}" FontSize="20" FontWeight="Bold" Foreground="#F48771"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="3" Orientation="Vertical">
+                    <TextBlock Text="Appeals Pending" FontSize="11" Foreground="#858585"/>
+                    <TextBlock Text="{Binding PendingAppeals}" FontSize="20" FontWeight="Bold" Foreground="#4EC9B0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="4" Orientation="Vertical">
+                    <TextBlock Text="AI Accuracy" FontSize="11" Foreground="#858585"/>
+                    <TextBlock Text="{Binding AIAccuracy, StringFormat={}{0:P0}}" FontSize="20" FontWeight="Bold" Foreground="#007ACC"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Panel - Cases and Content -->
+            <TabControl Grid.Column="0" Background="Transparent" BorderThickness="0">
+                <TabItem Header="Cases" Background="#252526" Foreground="#E0E0E0">
+                    <DataGrid ItemsSource="{Binding ModerationCases}" AutoGenerateColumns="False" 
+                             Background="#1E1E1E" Foreground="#E0E0E0" RowBackground="#252526"
+                             AlternatingRowBackground="#2D2D30" BorderThickness="0">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding CaseId}" Width="100"/>
+                            <DataGridTextColumn Header="User" Binding="{Binding UserId}" Width="100"/>
+                            <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" Width="150"/>
+                            <DataGridTextColumn Header="Severity" Binding="{Binding Severity}" Width="80"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="100"/>
+                            <DataGridTemplateColumn Header="Action" Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Review" Style="{StaticResource ModernButton}" 
+                                               Click="OnReviewCaseClick" Background="#007ACC" Padding="8,4" FontSize="12"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+
+                <TabItem Header="Flagged Content" Background="#252526" Foreground="#E0E0E0">
+                    <DataGrid ItemsSource="{Binding FlaggedContent}" AutoGenerateColumns="False"
+                             Background="#1E1E1E" Foreground="#E0E0E0" RowBackground="#252526">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Content ID" Binding="{Binding ContentId}" Width="100"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding ContentType}" Width="80"/>
+                            <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" Width="150"/>
+                            <DataGridTextColumn Header="Reports" Binding="{Binding ReportCount}" Width="60"/>
+                            <DataGridTemplateColumn Header="Action" Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Review" Style="{StaticResource ModernButton}"
+                                               Click="OnReviewContentClick" Background="#007ACC" Padding="8,4" FontSize="12"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+
+                <TabItem Header="Appeals" Background="#252526" Foreground="#E0E0E0">
+                    <DataGrid ItemsSource="{Binding Appeals}" AutoGenerateColumns="False"
+                             Background="#1E1E1E" Foreground="#E0E0E0" RowBackground="#252526">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Appeal ID" Binding="{Binding AppealId}" Width="100"/>
+                            <DataGridTextColumn Header="User" Binding="{Binding UserId}" Width="80"/>
+                            <DataGridTextColumn Header="Reason" Binding="{Binding Reason}" Width="150"/>
+                            <DataGridTextColumn Header="Submitted" Binding="{Binding CreatedAt, StringFormat={}{0:M/d/yyyy}}" Width="100"/>
+                            <DataGridTemplateColumn Header="Action" Width="80">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Review" Style="{StaticResource ModernButton}"
+                                               Click="OnReviewAppealClick" Background="#007ACC" Padding="8,4" FontSize="12"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </TabItem>
+
+                <TabItem Header="Analytics" Background="#252526" Foreground="#E0E0E0">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Padding="12">
+                            <Border Style="{StaticResource CardStyle}">
+                                    <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="Violation Categories" FontWeight="Bold" Foreground="#E0E0E0"/>
+                                    <DataGrid ItemsSource="{Binding ViolationStats}" AutoGenerateColumns="False"
+                                             Background="Transparent" Foreground="#E0E0E0"
+                                             BorderThickness="0" RowBackground="Transparent">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="*"/>
+                                            <DataGridTextColumn Header="Count" Binding="{Binding Count}" Width="60"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </StackPanel>
+                            </Border>
+
+                            <Border Style="{StaticResource CardStyle}">
+                                <StackPanel Orientation="Vertical" Spacing="8">
+                                    <TextBlock Text="Moderator Performance" FontWeight="Bold" Foreground="#E0E0E0"/>
+                                    <DataGrid ItemsSource="{Binding ModeratorStats}" AutoGenerateColumns="False"
+                                             Background="Transparent" Foreground="#E0E0E0"
+                                             BorderThickness="0" RowBackground="Transparent">
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Moderator" Binding="{Binding ModeratorId}" Width="100"/>
+                                            <DataGridTextColumn Header="Cases" Binding="{Binding CasesReviewed}" Width="60"/>
+                                            <DataGridTextColumn Header="Avg Time" Binding="{Binding AvgTimeHours, StringFormat={}{0:F1}h}" Width="80"/>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </StackPanel>
+                            </Border>
+                        </StackPanel>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+
+            <!-- Right Panel - Details and Actions -->
+            <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="0,8,20,8">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical" Spacing="12">
+                        <TextBlock Text="Case Details" FontSize="14" FontWeight="Bold" Foreground="#E0E0E0"/>
+
+                        <StackPanel Orientation="Vertical" Spacing="4">
+                            <TextBlock Text="Case ID" FontSize="10" Foreground="#858585"/>
+                            <TextBlock Text="{Binding SelectedCase.CaseId}" FontSize="12" Foreground="#E0E0E0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Spacing="4">
+                            <TextBlock Text="User" FontSize="10" Foreground="#858585"/>
+                            <TextBlock Text="{Binding SelectedCase.UserId}" FontSize="12" Foreground="#E0E0E0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Spacing="4">
+                            <TextBlock Text="Reason" FontSize="10" Foreground="#858585"/>
+                            <TextBlock Text="{Binding SelectedCase.Reason}" FontSize="12" Foreground="#E0E0E0" TextWrapping="Wrap"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Spacing="4">
+                            <TextBlock Text="Severity" FontSize="10" Foreground="#858585"/>
+                            <ProgressBar Value="{Binding SelectedCase.Severity}" Maximum="5" Height="6" 
+                                        Background="#3E3E42" Foreground="#F48771"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Vertical" Spacing="4">
+                            <TextBlock Text="AI Confidence" FontSize="10" Foreground="#858585"/>
+                            <ProgressBar Value="{Binding SelectedCase.AIConfidence}" Maximum="1" Height="6"
+                                        Background="#3E3E42" Foreground="#007ACC"/>
+                        </StackPanel>
+
+                        <Separator Background="#3E3E42" Margin="0,8"/>
+
+                        <StackPanel Orientation="Vertical" Spacing="8">
+                            <TextBlock Text="Action" FontSize="12" FontWeight="Bold" Foreground="#E0E0E0"/>
+                            <Button Content="✓ Approve" Style="{StaticResource ModernButton}" 
+                                   Background="#4EC9B0" Click="OnApproveCaseClick"/>
+                            <Button Content="✕ Dismiss" Style="{StaticResource ModernButton}"
+                                   Background="#6A9955" Click="OnDismissCaseClick"/>
+                            <Button Content="🚫 Ban User" Style="{StaticResource ModernButton}"
+                                   Background="#F48771" Click="OnBanUserClick"/>
+                        </StackPanel>
+
+                        <Separator Background="#3E3E42" Margin="0,8"/>
+
+                        <StackPanel Orientation="Vertical" Spacing="4">
+                            <TextBlock Text="Notes" FontSize="10" Foreground="#858585"/>
+                            <TextBox Text="{Binding ReviewNotes}" Height="80" Background="#1E1E1E" 
+                                    Foreground="#E0E0E0" Padding="8" TextWrapping="Wrap" 
+                                    BorderBrush="#3E3E42" BorderThickness="1"/>
+                        </StackPanel>
+
+                        <Button Content="💾 Save Notes" Style="{StaticResource ModernButton}" Click="OnSaveNotesClick"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- Footer -->
+        <Border Grid.Row="3" Background="#252526" Padding="20" BorderThickness="0,1,0,0" BorderBrush="#3E3E42">
+            <StackPanel Orientation="Horizontal" Spacing="20">
+                <TextBlock Text="{Binding StatusMessage}" Foreground="#858585" VerticalAlignment="Center"/>
+                <ProgressBar Width="200" Height="4" Background="#3E3E42" 
+                            Foreground="#007ACC" Value="{Binding LoadingProgress}" Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisConverter}}"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

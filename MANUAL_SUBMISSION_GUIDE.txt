@@ -1,0 +1,419 @@
+================================================================================
+                    ZAMAR - MANUAL APP STORE SUBMISSION
+================================================================================
+
+WHAT CHANGED
+============
+
+eas.json now only contains BUILD configuration (no submit).
+
+Why? The submit section needed special credentials that most developers don't 
+have. Instead, you'll submit your builds manually through:
+  - Google Play Console (Android)
+  - App Store Connect (iOS)
+
+This is actually simpler and gives you more control!
+
+
+CORRECTED WORKFLOW
+==================
+
+Step 1: Build your app
+  cd /workspaces/Zamar/mobile
+  eas build --platform all
+  (Wait 10-30 minutes)
+
+Step 2: Manual submission to Google Play
+  1. Go to: https://play.google.com/apps/publish
+  2. Login with Google account
+  3. Create new app "Zamar"
+  4. Pay $25 fee
+  5. Fill app info, screenshots, descriptions
+  6. Upload APK (from your build)
+  7. Submit for review
+
+Step 3: Manual submission to App Store
+  1. Go to: https://appstoreconnect.apple.com
+  2. Login with Apple ID
+  3. Create new app "Zamar"
+  4. Pay $99/year fee
+  5. Fill app info, screenshots, descriptions
+  6. Upload IPA (from your build)
+  7. Submit for review
+
+
+HOW TO GET YOUR BUILD FILES
+============================
+
+After "eas build --platform all" completes:
+
+1. Get your build link:
+   eas build:list
+   (Shows all your builds with download links)
+
+2. Or download directly:
+   eas build:download --id <build-id>
+   (ID shown when build finishes)
+
+3. Files you get:
+   - APK file (for Google Play) - about 50-80 MB
+   - IPA file (for App Store) - about 60-100 MB
+
+
+STEP BY STEP: BUILD PROCESS
+============================
+
+1. Login to Expo:
+   expo login
+
+2. Go to mobile:
+   cd /workspaces/Zamar/mobile
+
+3. Start build:
+   eas build --platform all
+
+4. Watch progress:
+   Terminal shows:
+   ✓ Building...
+   → Checking dependencies
+   → Compiling
+   → Uploading...
+   ✓ Build finished!
+
+5. Get download link:
+   eas build:list
+   (Shows all your builds)
+
+6. Download build files:
+   - Click link from eas build:list
+   - Or use: eas build:download --id <id>
+
+
+SUBMITTING TO GOOGLE PLAY
+==========================
+
+Prerequisites:
+  ✓ Google account
+  ✓ $25 one-time fee
+  ✓ APK build file
+  ✓ App info ready
+
+Steps:
+
+1. Create account:
+   https://play.google.com/apps/publish
+   Pay $25 fee
+   Verify identity
+
+2. Create new app:
+   Name: "Zamar"
+   Category: Games
+   Content rating: Take questionnaire
+
+3. Fill app information:
+   Short description (80 chars): "Multiplayer game platform"
+   Full description (4000 chars): Full details
+   Screenshots: 2-5 phone screenshots
+   Featured image: 1024x500 PNG
+   Icon: 512x512 PNG
+
+4. Set up content rating:
+   Answer questions about content
+   Get IARC rating
+
+5. Upload APK:
+   Go to "Release" tab
+   Click "Production"
+   Upload APK file
+   Version code: 1
+   Release notes: "Initial launch"
+
+6. Set pricing:
+   Free (selected by default)
+
+7. Submit for review:
+   Click "Submit"
+   Google reviews in 24-48 hours
+
+
+SUBMITTING TO APP STORE
+=======================
+
+Prerequisites:
+  ✓ Apple ID
+  ✓ $99/year fee
+  ✓ IPA build file
+  ✓ App info ready
+
+Steps:
+
+1. Create account:
+   https://developer.apple.com
+   Enroll in Developer Program
+   Pay $99/year
+   Accept agreements
+
+2. Go to App Store Connect:
+   https://appstoreconnect.apple.com
+
+3. Create new app:
+   "My Apps" → "+"
+   Name: "Zamar"
+   Bundle ID: com.zamarplatform.zamar
+   Platform: iOS
+   SKU: zamar-001 (any unique ID)
+
+4. Fill app information:
+   Subtitle: "Multiplayer Gaming"
+   Privacy policy: Add URL
+   Guidance: Select rating (4+, 12+, 17+)
+   Screenshots: iPhone + iPad required
+   App preview: Optional video
+
+5. Prepare for submission:
+   App information ✓
+   Pricing and Availability ✓
+   App privacy ✓
+
+6. Build & upload:
+   Use Transporter (Apple tool)
+   Upload IPA file
+   Version: 1.0.0
+   Build number: 1
+
+7. Complete information:
+   Version release notes: "Launch version"
+   Phased release: Optional
+
+8. Submit for review:
+   Click "Submit for Review"
+   Apple reviews in 1-5 days
+
+
+QUICK GOOGLE PLAY CHECKLIST
+============================
+
+Before uploading:
+  ☐ APK file downloaded
+  ☐ Google account created
+  ☐ $25 fee paid
+  ☐ Developer account active
+
+App information:
+  ☐ App name: "Zamar"
+  ☐ Short description written
+  ☐ Full description written
+  ☐ Screenshots taken (2-5)
+  ☐ Feature graphic created (1024x500)
+  ☐ App icon created (512x512)
+  ☐ Content rating completed
+  ☐ Category selected (Games)
+  ☐ Privacy policy added
+
+Upload:
+  ☐ APK file ready
+  ☐ Version code set (1)
+  ☐ Release notes written
+  ☐ Pricing set to Free
+
+Review:
+  ☐ All info complete
+  ☐ Submitted for review
+  ☐ Waiting 24-48 hours
+
+
+QUICK APP STORE CHECKLIST
+==========================
+
+Before uploading:
+  ☐ IPA file downloaded
+  ☐ Apple account created
+  ☐ $99 fee paid
+  ☐ Developer account active
+
+App information:
+  ☐ App name: "Zamar"
+  ☐ Bundle ID: com.zamarplatform.zamar
+  ☐ SKU created
+  ☐ Subtitle written
+  ☐ Description written
+  ☐ Screenshots taken (iPhone minimum 2)
+  ☐ App icon (1024x1024)
+  ☐ Privacy policy added
+  ☐ Support URL added (if have)
+  ☐ Content rating selected
+  ☐ Category selected (Games)
+
+Upload:
+  ☐ IPA file ready
+  ☐ Version: 1.0.0
+  ☐ Build number: 1
+  ☐ Release notes written
+
+Review:
+  ☐ All info complete
+  ☐ Submitted for review
+  ☐ Waiting 1-5 days
+
+
+AFTER SUBMISSION
+================
+
+Google Play:
+  1. Monitoring:
+     - Check Console daily
+     - Look for approval/rejection emails
+     - Usually 24-48 hours
+
+  2. If approved:
+     - App goes live immediately
+     - Link: https://play.google.com/store/apps/details?id=com.zamarplatform.zamar
+     - Share with friends!
+
+  3. If rejected:
+     - Read rejection reason
+     - Fix issues
+     - Resubmit
+
+App Store:
+  1. Monitoring:
+     - Check App Store Connect
+     - Look for approval emails
+     - Usually 1-5 days
+
+  2. If approved:
+     - App goes live within hours
+     - Link: https://apps.apple.com/app/zamar/[id]
+     - Share with friends!
+
+  3. If rejected:
+     - Read rejection reason
+     - Fix issues
+     - Resubmit
+
+
+TROUBLESHOOTING BUILDS
+======================
+
+Build never finishes:
+  Wait 30 minutes minimum
+  Normal for first build
+  Check: eas build:list
+  If stuck 1+ hour: Ctrl+C and retry
+
+Can't download build:
+  1. Get build ID: eas build:list
+  2. Download: eas build:download --id [id]
+  3. Or visit link from eas build:list
+
+Wrong file type:
+  Android: Should be .apk or .aab file
+  iOS: Should be .ipa file
+  If wrong: Rebuild
+
+Submission rejected:
+  1. Read rejection reason carefully
+  2. Fix the issue
+  3. Resubmit same version
+  4. Or create new build
+
+
+COMMON REJECTION REASONS
+========================
+
+Google Play:
+  - App crashes on launch
+  - Incomplete app store listing
+  - No privacy policy
+  - Adults only content not rated
+  - Broken permissions
+
+App Store:
+  - App crashes on launch
+  - Incomplete app information
+  - No privacy policy
+  - Doesn't match description
+  - Bugs or incomplete features
+
+
+HOW TO FIX ISSUES
+=================
+
+If your app is rejected:
+
+1. Read the rejection email
+2. Understand what's wrong
+3. Fix in code (if needed)
+4. Or fix in app store listing
+5. Resubmit
+
+For code issues:
+  1. Fix code
+  2. Build new version: eas build --platform all
+  3. Download new APK/IPA
+  4. Upload to store
+  5. Resubmit
+
+For listing issues:
+  1. Update descriptions
+  2. Add screenshots
+  3. Fix privacy policy
+  4. Resubmit (no new build needed)
+
+
+TIMELINE EXPECTATIONS
+=====================
+
+Google Play:
+  Build: 10-30 minutes
+  Review: 24-48 hours
+  Total: ~48 hours from build start
+
+App Store:
+  Build: 10-30 minutes
+  Review: 1-5 days
+  Total: ~5-7 days from build start
+
+After approval:
+  Google Play: Live immediately
+  App Store: Live within hours
+
+
+MANUAL SUBMISSION ADVANTAGES
+============================
+
+✓ More control over listing
+✓ Can write custom descriptions
+✓ Can customize screenshots per language
+✓ Can set specific release dates
+✓ Can manage pricing per region
+✓ Can monitor approval progress
+✓ Get detailed rejection reasons
+
+
+YOUR CURRENT STATUS
+===================
+
+✓ eas.json is fixed (only build section)
+✓ Mobile app is ready to build
+✓ eas build should work now
+✓ You're ready to submit manually
+
+Next steps:
+  1. Build: eas build --platform all
+  2. Download APK and IPA
+  3. Create Google Play account ($25)
+  4. Create App Store account ($99)
+  5. Submit manually through consoles
+
+
+IT'S SIMPLIFIED!
+================
+
+Old way: eas submit (needs special credentials)
+New way: Download build → Upload through web
+
+Actually easier and you have full control!
+
+Good luck! 🚀
+================================================================================

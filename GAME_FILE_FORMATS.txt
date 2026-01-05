@@ -1,0 +1,349 @@
+================================================================================
+                    ZAMAR GAME FILE FORMATS
+================================================================================
+
+FILE FORMAT SPECIFICATIONS
+==========================
+
+.ZMBLX - Zamar Game Place File (Binary Format)
+  Purpose: Complete game world/place
+  Contains: Map, objects, parts, scripts, settings
+  Extension: .zmblx
+  Encryption: AES-256
+  Signature: HMAC-SHA256
+
+.ZM - Zamar Game Model File (Binary Format)
+  Purpose: Individual game model/object
+  Contains: Parts, mesh data, properties, animations
+  Extension: .zm
+  Encryption: AES-256
+  Signature: HMAC-SHA256
+
+
+ZMBLX FILE STRUCTURE
+====================
+
+Header (64 bytes):
+  Magic Number: "ZMBLX" (5 bytes)
+  Version: 1.0 (2 bytes)
+  Flags: Encryption/Compression (1 byte)
+  Reserved: (56 bytes)
+
+Metadata (Variable):
+  Game Name: String (max 255 chars)
+  Author: String (max 255 chars)
+  Version: String (max 50 chars)
+  Created: Timestamp (8 bytes)
+  Modified: Timestamp (8 bytes)
+  Game ID: UUID (16 bytes)
+  Thumbnail: Binary (max 100KB)
+
+Security (Variable):
+  File Hash: SHA256 (32 bytes)
+  Signature: HMAC-SHA256 (32 bytes)
+  Salt: Random (16 bytes)
+  IV: Initialization Vector (16 bytes)
+
+Content (Encrypted):
+  Parts List: Serialized parts
+  Scripts List: Serialized scripts
+  Objects List: Serialized objects
+  Settings: Game configuration
+  Assets: Embedded media/images
+
+Footer (8 bytes):
+  CRC32 Checksum
+  File Size
+
+
+ZM FILE STRUCTURE
+=================
+
+Header (32 bytes):
+  Magic Number: "ZM" (2 bytes)
+  Version: 1.0 (2 bytes)
+  Flags: (1 byte)
+  Reserved: (27 bytes)
+
+Metadata (Variable):
+  Model Name: String
+  Author: String
+  Version: String
+  Created: Timestamp
+  Model ID: UUID
+
+Model Data (Encrypted):
+  Parts: Mesh, collision, properties
+  Animations: Keyframes, duration
+  Properties: Physics, appearance
+  Scripts: Behavior code
+
+Security:
+  Signature: HMAC-SHA256
+  Hash: SHA256
+  Salt: Random (16 bytes)
+  IV: Initialization Vector (16 bytes)
+
+Footer:
+  CRC32 Checksum
+
+
+FILE FORMAT VERSIONS
+====================
+
+Version 1.0 (Current):
+  ✓ AES-256 encryption
+  ✓ HMAC-SHA256 signatures
+  ✓ Compression support
+  ✓ Asset embedding
+  ✓ Anti-tamper checksums
+
+Future versions may add:
+  ✓ Streaming support
+  ✓ Delta compression
+  ✓ Remote asset linking
+  ✓ Plugin system
+
+
+SECURITY REQUIREMENTS
+=====================
+
+File Signing:
+  ✓ Developer private key
+  ✓ HMAC-SHA256 signature
+  ✓ Server validates before use
+  ✓ Blocks modified files
+
+Encryption:
+  ✓ AES-256-CBC
+  ✓ Random IV per file
+  ✓ Random salt
+  ✓ Key derivation from master key
+
+Hash Validation:
+  ✓ SHA256 file hash
+  ✓ CRC32 checksum
+  ✓ Detects corruption
+  ✓ Prevents injection
+
+Timestamp Verification:
+  ✓ File creation time
+  ✓ Last modification time
+  ✓ Server checks against upload time
+  ✓ Prevents version confusion
+
+
+SIZE LIMITS
+===========
+
+ZMBLX Files:
+  Max size: 500 MB
+  Recommended: 50-100 MB
+  Compression: ZIP or DEFLATE
+
+ZM Files:
+  Max size: 50 MB
+  Recommended: 5-20 MB
+  Compression: ZIP or DEFLATE
+
+Thumbnails:
+  Max size: 100 KB
+  Format: PNG or JPG
+  Dimensions: 256x256
+
+
+CREATION & VALIDATION
+=====================
+
+Creating a ZMBLX file:
+  1. Gather game data (parts, objects, scripts)
+  2. Serialize all data
+  3. Calculate SHA256 hash
+  4. Encrypt with AES-256
+  5. Sign with HMAC-SHA256
+  6. Add header and metadata
+  7. Calculate CRC32
+  8. Write file
+
+Creating a ZM file:
+  1. Export model data
+  2. Serialize mesh/animation/properties
+  3. Calculate SHA256 hash
+  4. Encrypt with AES-256
+  5. Sign with HMAC-SHA256
+  6. Add header and metadata
+  7. Calculate CRC32
+  8. Write file
+
+Validating a ZMBLX file:
+  1. Read header
+  2. Verify magic number
+  3. Check version compatibility
+  4. Read metadata
+  5. Verify CRC32 checksum
+  6. Verify HMAC signature
+  7. Verify SHA256 hash
+  8. Decrypt content
+  9. Parse and validate structure
+  10. Check for malicious code
+
+Validating a ZM file:
+  1. Read header
+  2. Verify magic number
+  3. Check version compatibility
+  4. Verify CRC32 checksum
+  5. Verify HMAC signature
+  6. Verify SHA256 hash
+  7. Decrypt content
+  8. Validate mesh/animation data
+  9. Check for code injection
+
+
+ANTI-TAMPER FEATURES
+====================
+
+Multiple signatures:
+  ✓ File signature (HMAC)
+  ✓ Developer signature
+  ✓ Server timestamp
+  ✓ Hash verification
+
+Detection of tampering:
+  ✓ Changed hash detected
+  ✓ Invalid signature detected
+  ✓ Corruption detected via CRC32
+  ✓ Version mismatch detected
+  ✓ Wrong decryption key detected
+
+
+EXAMPLE USAGE
+=============
+
+C# - Creating file:
+  var game = new GamePlace();
+  var serializer = new ZmblxSerializer();
+  serializer.Encrypt = true;
+  serializer.Sign = true;
+  serializer.SaveToFile("MyGame.zmblx", game);
+
+C# - Loading file:
+  var validator = new GameFileValidator();
+  if (validator.ValidateFile("MyGame.zmblx")) {
+    var serializer = new ZmblxSerializer();
+    var game = serializer.LoadFromFile("MyGame.zmblx");
+  }
+
+JavaScript - Creating file:
+  const serializer = new ZmblxSerializer();
+  const game = new GamePlace();
+  const buffer = await serializer.serialize(game);
+  await uploadFile(buffer, 'MyGame.zmblx');
+
+JavaScript - Loading file:
+  const validator = new GameFileValidator();
+  const isValid = await validator.validate(fileBuffer);
+  if (isValid) {
+    const game = await deserialize(fileBuffer);
+  }
+
+
+BACKWARDS COMPATIBILITY
+=======================
+
+Version checking:
+  ✓ All files start with magic number
+  ✓ Version field indicates format
+  ✓ Server knows how to handle each version
+  ✓ New versions backward compatible
+
+Migration:
+  ✓ Old files automatically upgraded
+  ✓ Hash recalculated
+  ✓ Re-signed by server
+  ✓ Stored in new format
+
+
+DISTRIBUTION
+=============
+
+Uploading game file:
+  1. Select .zmblx or .zm file
+  2. Server validates file integrity
+  3. Server checks file signature
+  4. Server scans for malicious code
+  5. Server stores encrypted copy
+  6. Server stores backup
+  7. User can now publish
+
+Downloading game file:
+  1. User requests download
+  2. Server verifies permissions
+  3. Server decrypts file
+  4. Server verifies signature
+  5. File sent to client
+  6. Client validates before use
+  7. Client decrypts and loads
+
+
+COMPATIBILITY NOTES
+===================
+
+Cross-Platform:
+  ✓ Windows (.NET)
+  ✓ Mac/Linux (.NET Core)
+  ✓ Mobile (React Native - as encrypted blob)
+  ✓ Web (browser download)
+
+Format is standardized:
+  ✓ Same binary format everywhere
+  ✓ Same encryption algorithm
+  ✓ Same signing method
+  ✓ All platforms validate same way
+
+
+SECURITY CHECKLIST
+==================
+
+When creating files:
+  ☐ Use AES-256 encryption
+  ☐ Use HMAC-SHA256 signature
+  ☐ Generate random IV
+  ☐ Generate random salt
+  ☐ Calculate SHA256 hash
+  ☐ Calculate CRC32 checksum
+  ☐ Include timestamp
+  ☐ Include version
+
+When receiving files:
+  ☐ Check magic number
+  ☐ Check version
+  ☐ Verify CRC32
+  ☐ Verify HMAC signature
+  ☐ Verify SHA256 hash
+  ☐ Decrypt safely
+  ☐ Validate structure
+  ☐ Check for injected code
+
+When storing files:
+  ☐ Encrypt at rest
+  ☐ Store in secure location
+  ☐ Keep backup copy
+  ☐ Log all access
+  ☐ Verify checksum periodically
+
+
+NEXT STEPS
+==========
+
+Files will be created:
+  1. GameFileSerializer.cs - Handles .zmblx/.zm creation
+  2. GameFileValidator.cs - Validates files
+  3. ZmblxFile.cs - ZMBLX format class
+  4. ZmFile.cs - ZM format class
+  5. AntiCheatService.cs - Server-side anti-cheat
+  6. ClientSecurityModule.cs - Client protection
+  7. SecureUploadHandler.cs - Secure file upload
+  8. GameFileEncryption.cs - Encryption/decryption
+  9. FileSignatureManager.cs - Signing/verification
+
+================================================================================

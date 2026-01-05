@@ -1,0 +1,142 @@
+<Window x:Class="ZamarPlayer.Views.MainHubWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Zamar Player - Global Gaming Network" Height="768" Width="1024"
+        Background="#0a0e27"
+        Foreground="White"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <!-- Top Navigation Bar -->
+        <Border Background="#1a1f3a" Height="60" VerticalAlignment="Top" BorderBrush="#00D7FF" BorderThickness="0,0,0,2">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                <TextBlock Text="⚡ ZAMAR" FontSize="20" FontWeight="Bold" Foreground="#00D7FF" Margin="0,0,40,0"/>
+                
+                <Button x:Name="HomeButton" Content="Home" Foreground="White" Background="Transparent" 
+                        BorderThickness="0" FontSize="12" Margin="0,0,20,0" Cursor="Hand"/>
+                <Button x:Name="GamesButton" Content="Browse Games" Foreground="White" Background="Transparent" 
+                        BorderThickness="0" FontSize="12" Margin="0,0,20,0" Cursor="Hand"/>
+                <Button x:Name="ServersButton" Content="Servers" Foreground="White" Background="Transparent" 
+                        BorderThickness="0" FontSize="12" Margin="0,0,20,0" Cursor="Hand" Click="ServersButton_Click"/>
+                <Button x:Name="AvatarButton" Content="Avatar" Foreground="White" Background="Transparent" 
+                        BorderThickness="0" FontSize="12" Margin="0,0,20,0" Cursor="Hand"/>
+                <Button x:Name="CatalogButton" Content="Catalog" Foreground="White" Background="Transparent" 
+                        BorderThickness="0" FontSize="12" Margin="0,0,20,0" Cursor="Hand"/>
+                <Button x:Name="FriendsButton" Content="Friends" Foreground="White" Background="Transparent" 
+                        BorderThickness="0" FontSize="12" Margin="0,0,20,0" Cursor="Hand"/>
+                <Button x:Name="SettingsButton" Content="⚙ Settings" Foreground="White" Background="Transparent" 
+                        BorderThickness="0" FontSize="12" Margin="0,0,20,0" Cursor="Hand" Click="SettingsButton_Click"/>
+                
+                <TextBlock x:Name="UserInfoText" Text="[Loading...]" Margin="Auto,0,20,0" Foreground="#00FF00"/>
+                <TextBlock Text="●" Foreground="#00FF00" FontSize="14"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content Area -->
+        <Grid Margin="0,60,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Sidebar -->
+            <Border Grid.Column="0" Background="#0f1219" BorderBrush="#1a1f3a" BorderThickness="0,0,1,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="15,15,15,15">
+                        <TextBlock Text="🎮 QUICK PLAY" FontSize="12" Foreground="#888888" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <Button Content="Continue Playing" Background="#1a1f3a" Foreground="White" 
+                                BorderThickness="1" BorderBrush="#333" Padding="10,8" Margin="0,0,0,5" Cursor="Hand"/>
+                        <Button Content="❤ Favorites" Background="#1a1f3a" Foreground="White" 
+                                BorderThickness="1" BorderBrush="#333" Padding="10,8" Margin="0,0,0,5" Cursor="Hand"/>
+                        <Button Content="🕐 Recently Played" Background="#1a1f3a" Foreground="White" 
+                                BorderThickness="1" BorderBrush="#333" Padding="10,8" Margin="0,0,0,5" Cursor="Hand"/>
+                        
+                        <Separator Margin="0,15,0,15" Background="#1a1f3a"/>
+                        
+                        <TextBlock Text="👤 ACCOUNT" FontSize="12" Foreground="#888888" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <Button Content="My Avatar" Background="#1a1f3a" Foreground="White" 
+                                BorderThickness="1" BorderBrush="#333" Padding="10,8" Margin="0,0,0,5" Cursor="Hand"/>
+                        <Button Content="💼 My Inventory" Background="#1a1f3a" Foreground="White" 
+                                BorderThickness="1" BorderBrush="#333" Padding="10,8" Margin="0,0,0,5" Cursor="Hand"/>
+                        <Button Content="📦 Game Passes" Background="#1a1f3a" Foreground="White" 
+                                BorderThickness="1" BorderBrush="#333" Padding="10,8" Margin="0,0,0,5" Cursor="Hand"/>
+                        <Button Content="🏆 Achievements" Background="#1a1f3a" Foreground="White" 
+                                BorderThickness="1" BorderBrush="#333" Padding="10,8" Margin="0,0,0,5" Cursor="Hand"/>
+                        <Button Content="📊 Leaderboards" Background="#1a1f3a" Foreground="White" 
+                                BorderThickness="1" BorderBrush="#333" Padding="10,8" Margin="0,0,0,5" Cursor="Hand"/>
+                        
+                        <Separator Margin="0,15,0,15" Background="#1a1f3a"/>
+                        
+                        <TextBlock Text="🌐 PLATFORM" FontSize="12" Foreground="#888888" FontWeight="Bold" Margin="0,0,0,10"/>
+                        <TextBlock Text="Regions: 17" Foreground="#888888" FontSize="11" Margin="0,0,0,3"/>
+                        <TextBlock Text="Countries: 12+" Foreground="#888888" FontSize="11" Margin="0,0,0,3"/>
+                        <TextBlock Text="Continents: 5" Foreground="#888888" FontSize="11" Margin="0,0,0,10"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+
+            <!-- Game Grid -->
+            <Grid Grid.Column="1" Margin="30,30,30,30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                    <TextBlock Text="🎮 Featured Games" FontSize="24" FontWeight="Bold" Foreground="#00D7FF" Margin="0,0,0,10"/>
+                    <TextBlock Text="Join millions of players worldwide. Connect to the nearest server for the best experience." 
+                               Foreground="#999999" FontSize="12"/>
+                </StackPanel>
+
+                <ListBox x:Name="GamesListBox" Grid.Row="1" Background="Transparent" BorderThickness="0" 
+                         Foreground="White" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#1a1f3a" Margin="0,0,0,15" Padding="20" BorderBrush="#333" BorderThickness="1" CornerRadius="5">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="150"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="150"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Game Info -->
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                                        <Rectangle Width="140" Height="140" Fill="#0f1219" Margin="0,0,0,10"/>
+                                        <TextBlock Text="{Binding Players}" FontSize="11" Foreground="#00FF00" FontWeight="Bold"/>
+                                        <TextBlock Text="players online" FontSize="10" Foreground="#888888"/>
+                                    </StackPanel>
+
+                                    <!-- Game Details -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="20,0,0,0">
+                                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold" Foreground="#00D7FF" Margin="0,0,0,5"/>
+                                        <TextBlock Text="{Binding Description}" FontSize="12" Foreground="#CCCCCC" TextWrapping="Wrap" Margin="0,0,0,10"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Creator: " FontSize="11" Foreground="#999999"/>
+                                            <TextBlock Text="{Binding Creator}" FontSize="11" Foreground="#00D7FF" FontWeight="Bold"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding Updated, StringFormat='Updated: {0:g}'}" FontSize="10" Foreground="#666666" Margin="0,5,0,0"/>
+                                    </StackPanel>
+
+                                    <!-- Play Button -->
+                                    <Button Grid.Column="2" Content="▶ PLAY NOW" Background="#00D7FF" Foreground="#0a0e27" 
+                                            FontSize="14" FontWeight="Bold" Padding="10,15" VerticalAlignment="Center" 
+                                            Cursor="Hand" Click="PlayButton_Click"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
+
+        <!-- Bottom Status Bar -->
+        <Border Background="#0f1219" Height="40" VerticalAlignment="Bottom" BorderBrush="#1a1f3a" BorderThickness="0,1,0,0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0">
+                <TextBlock Text="🟢 All Systems Online" Foreground="#00FF00" FontSize="11" Margin="0,0,30,0"/>
+                <TextBlock Text="17 Global Servers" Foreground="#888888" FontSize="11" Margin="0,0,30,0"/>
+                <TextBlock Text="Low Latency Routing" Foreground="#888888" FontSize="11" Margin="0,0,30,0"/>
+                <TextBlock Text="Version 2.0.0" Foreground="#666666" FontSize="10" Margin="Auto,0,20,0"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

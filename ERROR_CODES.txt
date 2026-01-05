@@ -1,0 +1,678 @@
+================================================================================
+                        ZAMAR ERROR CODES SYSTEM
+================================================================================
+
+COMPLETE ERROR CODE REFERENCE FOR ALL SYSTEMS
+==============================================
+
+Error codes follow format: [SYSTEM]_[CATEGORY]_[SEVERITY]_[CODE]
+Example: SRV_AUTH_ERR_001 = Server Authentication Error #001
+
+
+================================================================================
+                          AUTHENTICATION ERRORS
+================================================================================
+
+Format: AUTH_XXX
+
+AUTH_001: Invalid credentials
+  Status: 401 Unauthorized
+  Message: "Email or password is incorrect"
+  Recovery: Prompt user to try again or reset password
+
+AUTH_002: Account not found
+  Status: 404 Not Found
+  Message: "No account found with that email"
+  Recovery: Suggest account creation or email recovery
+
+AUTH_003: Account suspended
+  Status: 403 Forbidden
+  Message: "Your account has been suspended"
+  Recovery: Contact support for reinstatement
+
+AUTH_004: Account locked (too many login attempts)
+  Status: 429 Too Many Requests
+  Message: "Account locked due to too many failed attempts"
+  Recovery: Wait 30 minutes or verify email for instant unlock
+
+AUTH_005: Session expired
+  Status: 401 Unauthorized
+  Message: "Your session has expired. Please log in again."
+  Recovery: Redirect to login page, preserve user data
+
+AUTH_006: Invalid token
+  Status: 401 Unauthorized
+  Message: "Invalid authentication token"
+  Recovery: Force re-login
+
+AUTH_007: Token expired
+  Status: 401 Unauthorized
+  Message: "Your token has expired. Please log in again."
+  Recovery: Refresh token or re-login
+
+AUTH_008: Two-factor authentication required
+  Status: 403 Forbidden
+  Message: "Two-factor authentication code required"
+  Recovery: Prompt for 2FA code
+
+AUTH_009: Invalid 2FA code
+  Status: 401 Unauthorized
+  Message: "Invalid two-factor code"
+  Recovery: Prompt for correct code
+
+AUTH_010: Email not verified
+  Status: 403 Forbidden
+  Message: "Please verify your email address"
+  Recovery: Send verification email
+
+
+================================================================================
+                          SERVER ERRORS
+================================================================================
+
+Format: SRV_XXX
+
+SRV_001: Internal server error
+  Status: 500 Internal Server Error
+  Message: "An unexpected error occurred. Please try again."
+  Recovery: Log error, retry with exponential backoff
+
+SRV_002: Database connection error
+  Status: 503 Service Unavailable
+  Message: "Database temporarily unavailable"
+  Recovery: Retry, use cache if available
+
+SRV_003: Database query error
+  Status: 500 Internal Server Error
+  Message: "Failed to fetch data"
+  Recovery: Log query, retry, use cached data
+
+SRV_004: Service unavailable
+  Status: 503 Service Unavailable
+  Message: "Service is temporarily unavailable"
+  Recovery: Retry with exponential backoff
+
+SRV_005: Rate limit exceeded
+  Status: 429 Too Many Requests
+  Message: "Too many requests. Please wait before trying again."
+  Recovery: Wait, then retry
+
+SRV_006: Invalid request format
+  Status: 400 Bad Request
+  Message: "Invalid request format"
+  Recovery: Validate input and retry
+
+SRV_007: Missing required field
+  Status: 400 Bad Request
+  Message: "Missing required field: {fieldName}"
+  Recovery: Prompt user to fill missing field
+
+SRV_008: Invalid field value
+  Status: 400 Bad Request
+  Message: "Invalid value for {fieldName}"
+  Recovery: Validate and correct input
+
+SRV_009: Resource not found
+  Status: 404 Not Found
+  Message: "Resource not found"
+  Recovery: Refresh or check URL
+
+SRV_010: Permission denied
+  Status: 403 Forbidden
+  Message: "You don't have permission to access this"
+  Recovery: Request access or contact admin
+
+
+================================================================================
+                          GAME SESSION ERRORS
+================================================================================
+
+Format: GAME_XXX
+
+GAME_001: Game not found
+  Status: 404 Not Found
+  Message: "Game not found"
+  Recovery: Refresh game list, check if game still exists
+
+GAME_002: Game version mismatch
+  Status: 400 Bad Request
+  Message: "Game version doesn't match server"
+  Recovery: Update client to latest version
+
+GAME_003: Game server full
+  Status: 503 Service Unavailable
+  Message: "Game server is full. Please try again later."
+  Recovery: Queue or try different server
+
+GAME_004: Cannot connect to game server
+  Status: 503 Service Unavailable
+  Message: "Cannot connect to game server"
+  Recovery: Check internet, retry, try different server
+
+GAME_005: Game session not found
+  Status: 404 Not Found
+  Message: "Game session no longer exists"
+  Recovery: Create new session or rejoin
+
+GAME_006: Player not in game
+  Status: 400 Bad Request
+  Message: "Player is not in the game"
+  Recovery: Wait to join or rejoin game
+
+GAME_007: Game already started
+  Status: 400 Bad Request
+  Message: "Game has already started"
+  Recovery: Wait for next game or join spectate
+
+GAME_008: Game ended
+  Status: 400 Bad Request
+  Message: "Game has ended"
+  Recovery: Return to main menu, start new game
+
+GAME_009: Cannot load game file
+  Status: 400 Bad Request
+  Message: "Failed to load game file"
+  Recovery: Delete cache, redownload, check file
+
+GAME_010: Invalid game file
+  Status: 400 Bad Request
+  Message: "Game file is corrupted or invalid"
+  Recovery: Redownload from server
+
+
+================================================================================
+                          MULTIPLAYER ERRORS
+================================================================================
+
+Format: MP_XXX
+
+MP_001: Cannot join game
+  Status: 403 Forbidden
+  Message: "Unable to join game"
+  Recovery: Try again or different game
+
+MP_002: Connection lost
+  Status: 503 Service Unavailable
+  Message: "Lost connection to game server"
+  Recovery: Check internet, reconnect automatically
+
+MP_003: Connection timeout
+  Status: 408 Request Timeout
+  Message: "Connection to server timed out"
+  Recovery: Check internet, retry
+
+MP_004: Player disconnected
+  Status: 400 Bad Request
+  Message: "Player has disconnected"
+  Recovery: Wait for reconnect or end game
+
+MP_005: Invalid action
+  Status: 400 Bad Request
+  Message: "Invalid game action"
+  Recovery: Ensure valid game state, retry
+
+MP_006: Action rejected (anti-cheat)
+  Status: 403 Forbidden
+  Message: "Your action was rejected by anti-cheat"
+  Recovery: Ensure legitimate gameplay
+
+MP_007: Synchronization error
+  Status: 500 Internal Server Error
+  Message: "Game state out of sync"
+  Recovery: Rejoin game to resync
+
+MP_008: Chat message failed
+  Status: 400 Bad Request
+  Message: "Failed to send message"
+  Recovery: Try again, check message content
+
+MP_009: Player kicked from game
+  Status: 403 Forbidden
+  Message: "You have been kicked from the game"
+  Recovery: Check ban status, rejoin
+
+MP_010: Player banned from game
+  Status: 403 Forbidden
+  Message: "You have been banned from this game"
+  Recovery: Wait for ban to expire or appeal
+
+
+================================================================================
+                          PAYMENT/ROBUX ERRORS
+================================================================================
+
+Format: PAY_XXX
+
+PAY_001: Payment failed
+  Status: 402 Payment Required
+  Message: "Payment could not be processed"
+  Recovery: Check card, try again, contact support
+
+PAY_002: Insufficient funds
+  Status: 402 Payment Required
+  Message: "Insufficient Robux balance"
+  Recovery: Purchase more Robux
+
+PAY_003: Transaction already processed
+  Status: 400 Bad Request
+  Message: "This transaction has already been processed"
+  Recovery: Check account balance, don't retry
+
+PAY_004: Invalid payment method
+  Status: 400 Bad Request
+  Message: "Invalid payment method"
+  Recovery: Use different payment method
+
+PAY_005: Card declined
+  Status: 402 Payment Required
+  Message: "Your card was declined"
+  Recovery: Check card, use different card
+
+PAY_006: Fraud detected
+  Status: 403 Forbidden
+  Message: "Transaction blocked for security reasons"
+  Recovery: Contact support, verify identity
+
+PAY_007: Currency not supported
+  Status: 400 Bad Request
+  Message: "Currency not supported"
+  Recovery: Use supported currency
+
+PAY_008: Exchange rate error
+  Status: 500 Internal Server Error
+  Message: "Could not calculate exchange rate"
+  Recovery: Retry transaction
+
+PAY_009: Refund failed
+  Status: 500 Internal Server Error
+  Message: "Refund could not be processed"
+  Recovery: Contact support for manual refund
+
+PAY_010: Robux purchase limit reached
+  Status: 429 Too Many Requests
+  Message: "Daily purchase limit exceeded"
+  Recovery: Try again tomorrow
+
+
+================================================================================
+                          NETWORK ERRORS
+================================================================================
+
+Format: NET_XXX
+
+NET_001: No internet connection
+  Status: 0 (Client-side)
+  Message: "No internet connection detected"
+  Recovery: Connect to internet and retry
+
+NET_002: DNS resolution failed
+  Status: 0 (Client-side)
+  Message: "Cannot resolve server address"
+  Recovery: Check internet, try again
+
+NET_003: Connection refused
+  Status: 0 (Client-side)
+  Message: "Server refused connection"
+  Recovery: Server may be down, retry
+
+NET_004: Connection reset
+  Status: 0 (Client-side)
+  Message: "Connection reset by server"
+  Recovery: Reconnect automatically
+
+NET_005: Socket error
+  Status: 0 (Client-side)
+  Message: "Network socket error"
+  Recovery: Check network settings, retry
+
+NET_006: SSL/TLS error
+  Status: 0 (Client-side)
+  Message: "Secure connection failed"
+  Recovery: Update certificates, retry
+
+NET_007: Proxy error
+  Status: 0 (Client-side)
+  Message: "Proxy connection failed"
+  Recovery: Check proxy settings
+
+NET_008: Firewall blocked
+  Status: 0 (Client-side)
+  Message: "Firewall is blocking connection"
+  Recovery: Configure firewall rules
+
+NET_009: Upload failed
+  Status: 0 (Client-side)
+  Message: "Failed to upload data"
+  Recovery: Check connection, retry
+
+NET_010: Download failed
+  Status: 0 (Client-side)
+  Message: "Failed to download data"
+  Recovery: Check connection, resume download
+
+
+================================================================================
+                          CLIENT ERRORS
+================================================================================
+
+Format: CLIENT_XXX
+
+CLIENT_001: Out of memory
+  Status: N/A
+  Message: "Application is running low on memory"
+  Recovery: Close other apps, restart client
+
+CLIENT_002: Graphics error
+  Status: N/A
+  Message: "Graphics initialization failed"
+  Recovery: Update GPU drivers, verify game files
+
+CLIENT_003: Audio error
+  Status: N/A
+  Message: "Audio system failed"
+  Recovery: Update audio drivers, restart
+
+CLIENT_004: File system error
+  Status: N/A
+  Message: "Cannot access game files"
+  Recovery: Check file permissions, reinstall
+
+CLIENT_005: Registry error (Windows)
+  Status: N/A
+  Message: "Cannot read system registry"
+  Recovery: Run as admin, repair installation
+
+CLIENT_006: Crash detected
+  Status: N/A
+  Message: "Application crashed"
+  Recovery: Restart, check logs, report crash
+
+CLIENT_007: Missing DLL (Windows)
+  Status: N/A
+  Message: "Required system file is missing"
+  Recovery: Reinstall or repair installation
+
+CLIENT_008: Incompatible version
+  Status: N/A
+  Message: "Client version not compatible"
+  Recovery: Update to latest version
+
+CLIENT_009: Settings corrupted
+  Status: N/A
+  Message: "Game settings are corrupted"
+  Recovery: Reset to defaults, restart
+
+CLIENT_010: Plugin load error
+  Status: N/A
+  Message: "Failed to load plugin"
+  Recovery: Update or remove conflicting plugin
+
+
+================================================================================
+                          GAME LOGIC ERRORS
+================================================================================
+
+Format: LOGIC_XXX
+
+LOGIC_001: Invalid character state
+  Status: 400 Bad Request
+  Message: "Character is in an invalid state"
+  Recovery: Rejoin game, reset character
+
+LOGIC_002: Physics engine error
+  Status: 500 Internal Server Error
+  Message: "Physics simulation failed"
+  Recovery: Rejoin game, check for glitches
+
+LOGIC_003: Script execution error
+  Status: 500 Internal Server Error
+  Message: "Game script encountered an error"
+  Recovery: Check script logs, reload
+
+LOGIC_004: Invalid game operation
+  Status: 400 Bad Request
+  Message: "This operation is not allowed"
+  Recovery: Ensure valid game state
+
+LOGIC_005: Item not found
+  Status: 404 Not Found
+  Message: "Item not found in inventory"
+  Recovery: Refresh inventory, check if traded
+
+LOGIC_006: Quest not found
+  Status: 404 Not Found
+  Message: "Quest not found"
+  Recovery: Refresh quest log
+
+LOGIC_007: NPC not found
+  Status: 404 Not Found
+  Message: "NPC not found"
+  Recovery: Check location, try again
+
+LOGIC_008: Inventory full
+  Status: 400 Bad Request
+  Message: "Your inventory is full"
+  Recovery: Drop items or expand inventory
+
+LOGIC_009: Cannot perform action (missing requirements)
+  Status: 400 Bad Request
+  Message: "You don't meet requirements for this action"
+  Recovery: Complete prerequisites, try again
+
+LOGIC_010: Action cooldown active
+  Status: 429 Too Many Requests
+  Message: "Action is on cooldown"
+  Recovery: Wait for cooldown to expire
+
+
+================================================================================
+                          ADMIN/MODERATION ERRORS
+================================================================================
+
+Format: ADMIN_XXX
+
+ADMIN_001: Insufficient permissions
+  Status: 403 Forbidden
+  Message: "You don't have permission"
+  Recovery: Contact admin for access
+
+ADMIN_002: User not found
+  Status: 404 Not Found
+  Message: "User not found"
+  Recovery: Check username/ID
+
+ADMIN_003: Cannot ban user
+  Status: 400 Bad Request
+  Message: "User cannot be banned"
+  Recovery: Check if already banned
+
+ADMIN_004: Cannot kick user
+  Status: 400 Bad Request
+  Message: "User cannot be kicked"
+  Recovery: Try again or ban instead
+
+ADMIN_005: Mute failed
+  Status: 400 Bad Request
+  Message: "Failed to mute user"
+  Recovery: Try again
+
+ADMIN_006: Report failed
+  Status: 400 Bad Request
+  Message: "Failed to submit report"
+  Recovery: Try again
+
+ADMIN_007: Invalid admin action
+  Status: 400 Bad Request
+  Message: "Invalid admin action"
+  Recovery: Check action parameters
+
+ADMIN_008: Action already performed
+  Status: 400 Bad Request
+  Message: "This action has already been performed"
+  Recovery: Check logs, don't retry
+
+ADMIN_009: Cannot undo action
+  Status: 400 Bad Request
+  Message: "Cannot undo this action"
+  Recovery: Contact support for manual reversal
+
+ADMIN_010: Admin audit log error
+  Status: 500 Internal Server Error
+  Message: "Failed to log admin action"
+  Recovery: Retry action, contact support
+
+
+================================================================================
+                          SYSTEM ERRORS
+================================================================================
+
+Format: SYS_XXX
+
+SYS_001: Unknown error
+  Status: 500 Internal Server Error
+  Message: "An unknown error occurred"
+  Recovery: Check logs, contact support
+
+SYS_002: Timeout error
+  Status: 408 Request Timeout
+  Message: "Operation timed out"
+  Recovery: Check connection, retry
+
+SYS_003: Configuration error
+  Status: 500 Internal Server Error
+  Message: "System configuration error"
+  Recovery: Check config files, restart
+
+SYS_004: License invalid
+  Status: 403 Forbidden
+  Message: "Game license is invalid"
+  Recovery: Verify license, reactivate
+
+SYS_005: Version incompatible
+  Status: 400 Bad Request
+  Message: "Version is not compatible"
+  Recovery: Update to compatible version
+
+SYS_006: Dependency missing
+  Status: 500 Internal Server Error
+  Message: "Required dependency is missing"
+  Recovery: Install dependency, reinstall game
+
+SYS_007: Permission denied
+  Status: 403 Forbidden
+  Message: "Permission denied"
+  Recovery: Run with proper permissions
+
+SYS_008: Resource exhausted
+  Status: 503 Service Unavailable
+  Message: "System resources exhausted"
+  Recovery: Close other apps, retry
+
+SYS_009: Maintenance mode
+  Status: 503 Service Unavailable
+  Message: "Server is under maintenance"
+  Recovery: Check status page, try later
+
+SYS_010: Backup failed
+  Status: 500 Internal Server Error
+  Message: "Backup operation failed"
+  Recovery: Retry, check logs
+
+
+================================================================================
+                          FILE UPLOAD ERRORS
+================================================================================
+
+Format: FILE_XXX
+
+FILE_001: File too large
+  Status: 413 Payload Too Large
+  Message: "File is too large"
+  Recovery: Upload smaller file
+
+FILE_002: Invalid file type
+  Status: 400 Bad Request
+  Message: "File type not allowed"
+  Recovery: Upload valid file type
+
+FILE_003: Malware detected
+  Status: 403 Forbidden
+  Message: "File contains malware"
+  Recovery: Use clean file
+
+FILE_004: File corrupted
+  Status: 400 Bad Request
+  Message: "File is corrupted"
+  Recovery: Redownload and try again
+
+FILE_005: File already exists
+  Status: 409 Conflict
+  Message: "File already exists"
+  Recovery: Delete existing or rename
+
+FILE_006: Insufficient storage
+  Status: 507 Insufficient Storage
+  Message: "Not enough storage space"
+  Recovery: Free up space
+
+FILE_007: Upload interrupted
+  Status: 503 Service Unavailable
+  Message: "Upload was interrupted"
+  Recovery: Resume or retry upload
+
+FILE_008: Invalid file signature
+  Status: 400 Bad Request
+  Message: "File signature is invalid"
+  Recovery: Use valid file
+
+FILE_009: Virus scan failed
+  Status: 500 Internal Server Error
+  Message: "Virus scan failed"
+  Recovery: Retry upload
+
+FILE_010: File not found
+  Status: 404 Not Found
+  Message: "File not found"
+  Recovery: Check file path, reattempt
+
+
+================================================================================
+                          ERROR CODE CATEGORIES
+================================================================================
+
+1xx - Informational (processing continues)
+2xx - Success (operation completed)
+3xx - Redirection (further action needed)
+4xx - Client Error (invalid request)
+5xx - Server Error (server failure)
+
+By Category:
+  001-010: Authentication
+  011-020: Authorization
+  021-030: Validation
+  031-040: Database
+  041-050: File Operations
+  051-060: Network
+  061-070: Game Logic
+  071-080: Server
+  081-090: Client
+  091-100: System
+
+
+================================================================================
+                          ERROR HANDLING FLOW
+================================================================================
+
+1. Error occurs
+2. Error caught by handler
+3. Error code assigned
+4. Error logged with context
+5. Error type determined
+6. Recovery strategy applied
+7. User notified (if needed)
+8. Error telemetry sent
+9. Admin alert (if critical)
+10. Detailed logs saved
+
+
+================================================================================
