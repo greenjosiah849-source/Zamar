@@ -8,7 +8,7 @@
     <Grid>
         <!-- Left Navigation Panel -->
         <StackPanel Width="200" Background="#0F0F13" VerticalAlignment="Stretch">
-            <TextBlock Text="ZAMAR ADMIN" FontSize="16" FontWeight="Bold" Padding="15" Foreground="#00D7FF"/>
+            <TextBlock Text="ZAMAR ADMIN" FontSize="16" FontWeight="Bold" Margin="15" Foreground="#00D7FF"/>
             
             <!-- Nav Buttons -->
             <Button Content="Dashboard" Tag="dashboard" Click="NavButton_Click" 
@@ -22,8 +22,8 @@
             <Button Content="Settings" Tag="settings" Click="NavButton_Click" Style="{StaticResource NavButtonStyle}"/>
             <Button Content="Logout" Tag="logout" Click="NavButton_Click" Style="{StaticResource NavButtonStyle}" Foreground="#FF6B6B"/>
             
-            <TextBlock Text="Admin User" Padding="15,30,15,5" FontSize="12" Foreground="#888"/>
-            <TextBlock x:Name="AdminNameBlock" Text="Loading..." Padding="15,0,15,15" FontSize="11" Foreground="#00D7FF"/>
+            <TextBlock Text="Admin User" Margin="15,30,15,5" FontSize="12" Foreground="#888"/>
+            <TextBlock x:Name="AdminNameBlock" Text="Loading..." Margin="15,0,15,15" FontSize="11" Foreground="#00D7FF"/>
         </StackPanel>
 
         <!-- Main Content Area -->

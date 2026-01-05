@@ -42,7 +42,7 @@
             <StackPanel Orientation="Vertical" Margin="0,0,0,20">
                 <TextBlock Text="Health" Foreground="#FFFFFF" FontSize="12" FontWeight="Bold" />
                 <ProgressBar x:Name="HealthBar" Height="20" Background="#1a1f3a" Foreground="#00D7FF" 
-                             Value="100" Maximum="100" Radius="5" />
+                             Value="100" Maximum="100" />
                 <TextBlock x:Name="HealthText" Text="100 / 100" Foreground="#00D7FF" FontSize="11" Margin="0,5,0,0" />
             </StackPanel>
 
