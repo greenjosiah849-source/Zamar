@@ -71,7 +71,7 @@
                     <TextBlock Text="Real-time moderation and case management" FontSize="12" Foreground="#858585" Margin="0,4,0,0"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center" Spacing="8">
+                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Center">
                     <Button Content="⟳ Refresh" Style="{StaticResource ModernButton}" Click="OnRefreshClick"/>
                     <Button Content="⚙ Settings" Style="{StaticResource ModernButton}" Background="#6A9955" Click="OnSettingsClick"/>
                 </StackPanel>
@@ -192,7 +192,7 @@
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <StackPanel Padding="12">
                             <Border Style="{StaticResource CardStyle}">
-                                <StackPanel Orientation="Vertical" Spacing="8">
+                                    <StackPanel Orientation="Vertical">
                                     <TextBlock Text="Violation Categories" FontWeight="Bold" Foreground="#E0E0E0"/>
                                     <DataGrid ItemsSource="{Binding ViolationStats}" AutoGenerateColumns="False"
                                              Background="Transparent" Foreground="#E0E0E0"

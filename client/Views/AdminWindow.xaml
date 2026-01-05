@@ -30,7 +30,7 @@
         <Grid Margin="200,0,0,0">
             <!-- Dashboard Panel -->
             <ScrollViewer x:Name="DashboardPanel" Visibility="Visible">
-                <StackPanel Padding="30">
+                <StackPanel Margin="30">
                     <TextBlock Text="Dashboard" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
                     
                     <!-- Statistics Row -->
@@ -68,11 +68,11 @@
 
             <!-- Users Management Panel -->
             <ScrollViewer x:Name="UsersPanel" Visibility="Collapsed">
-                <StackPanel Padding="30">
+                <StackPanel Margin="30">
                     <TextBlock Text="User Management" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
                     
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                        <TextBox x:Name="UserSearchBox" Width="300" Padding="10" Background="#1A1A24" Foreground="#FFF" Placeholder="Search username..."/>
+                        <TextBox x:Name="UserSearchBox" Width="300" Padding="10" Background="#1A1A24" Foreground="#FFF"/>
                         <Button Content="Search" Width="100" Margin="10,0,0,0" Click="SearchUsers_Click"/>
                         <Button Content="Create User" Width="150" Margin="10,0,0,0" Click="CreateUser_Click"/>
                     </StackPanel>
