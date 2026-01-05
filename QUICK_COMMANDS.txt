@@ -1,0 +1,385 @@
+================================================================================
+                    ZAMAR - QUICK COMMAND REFERENCE
+================================================================================
+
+FIRST TIME SETUP (RUN THIS FIRST!)
+==================================
+
+Windows:
+  Double-click: DEPLOYMENT_SETUP.bat
+  
+Linux/Mac:
+  chmod +x DEPLOYMENT_SETUP.sh
+  ./DEPLOYMENT_SETUP.sh
+
+
+TESTING MOBILE APP
+==================
+
+1. Go to mobile folder:
+   cd mobile
+
+2. Start development:
+   expo start
+
+3. On your phone:
+   - Download Expo Go app (free)
+   - App Store or Google Play
+   - Scan QR code from terminal
+   - App loads on phone
+
+4. Test all screens:
+   - Home: Featured games
+   - Games: Game list
+   - Servers: Server browser
+   - Profile: User stats
+   - Settings: Preferences
+
+
+BUILDING FOR STORES
+===================
+
+After testing locally, build for app stores:
+
+Build Android (Google Play):
+  cd mobile
+  eas build --platform android
+
+Build iOS (App Store):
+  cd mobile
+  eas build --platform ios
+
+Build BOTH:
+  cd mobile
+  eas build --platform all
+
+
+SUBMITTING TO STORES
+====================
+
+After build completes, submit:
+
+Submit Android (Google Play):
+  cd mobile
+  eas submit --platform android
+
+Submit iOS (App Store):
+  cd mobile
+  eas submit --platform ios
+
+Submit BOTH:
+  cd mobile
+  eas submit --platform all
+
+
+STARTING SERVERS
+================
+
+Backend Server:
+  cd server
+  npm start
+  (Runs on http://localhost:3000)
+
+Website:
+  cd website
+  npm run dev
+  (Runs on http://localhost:3001)
+
+Game Server (Windows):
+  cd client
+  dotnet run
+  (Starts simplified launcher)
+
+
+COMMON ISSUES & FIXES
+=====================
+
+"expo: command not found"
+  → npm install -g expo-cli
+
+"eas: command not found"
+  → npm install -g eas-cli
+
+"npm: command not found"
+  → Install Node.js from nodejs.org
+
+Dependencies errors in mobile:
+  → cd mobile
+  → rm -rf node_modules
+  → npm install
+
+Dependencies errors in server:
+  → cd server
+  → rm -rf node_modules
+  → npm install
+
+Dependencies errors in website:
+  → cd website
+  → rm -rf node_modules
+  → npm install
+
+
+EXPO GO APP (FOR TESTING)
+=========================
+
+Free app for testing your Zamar mobile app on real phone:
+
+iOS:
+  App Store → Search "Expo Go"
+  (Official: Expo, Inc.)
+
+Android:
+  Google Play → Search "Expo Go"
+  (Official: Expo, Inc.)
+
+How to use:
+  1. Start expo: expo start
+  2. Open Expo Go app
+  3. Scan QR code
+  4. App appears on phone
+
+
+FIRST TIME EXPO/EAS LOGIN
+==========================
+
+Before you can build for stores, create Expo account:
+
+1. Create free account:
+   https://expo.dev
+
+2. Login in terminal:
+   expo login
+   (Enter email and password)
+
+3. Then you can build:
+   eas build --platform all
+   eas submit --platform all
+
+
+STEP BY STEP: FIRST TIME
+========================
+
+1. Run setup:
+   Windows: DEPLOYMENT_SETUP.bat
+   Linux/Mac: ./DEPLOYMENT_SETUP.sh
+
+2. Test locally:
+   cd mobile
+   expo start
+   (Scan with Expo Go app)
+
+3. Create Expo account:
+   https://expo.dev (free)
+
+4. Login to Expo:
+   expo login
+
+5. Build for stores:
+   eas build --platform all
+   (Takes 10-30 minutes)
+
+6. Submit to stores:
+   eas submit --platform all
+
+7. Wait for approval:
+   Android: 24-48 hours
+   iOS: 1-5 days
+
+8. Check status:
+   Google Play Console (for Android)
+   App Store Connect (for iOS)
+
+
+IMPORTANT ACCOUNTS
+==================
+
+Admin Accounts for Testing:
+  zamar / zamar_secure_pass_123
+  Ke_devy / intern_dev_pass_456
+  games / games_test_pass_789
+
+Default Player Account:
+  test_player / test_password_123
+
+
+SIMPLIFIED WINDOWS LAUNCHER
+============================
+
+Use instead of complex launcher:
+  File: client/Views/SimpleLauncherWindow.xaml.cs
+  
+Features:
+  - Simple gray UI
+  - No modern effects
+  - Basic game list
+  - Play button
+  - Navigation tabs
+  
+To activate:
+  Update App.xaml.cs to use SimpleLauncherWindow
+
+
+TROUBLESHOOTING
+===============
+
+1. Can't find commands?
+   → Make sure you ran DEPLOYMENT_SETUP first
+   → Restart terminal after setup
+
+2. Mobile app won't load?
+   → Check backend server is running (cd server && npm start)
+   → Make sure phone is on same network
+   → Try "expo start" again
+
+3. Expo won't start?
+   → Delete node_modules and reinstall:
+     cd mobile
+     rm -rf node_modules
+     npm install
+     expo start
+
+4. EAS won't build?
+   → Make sure you're logged in: expo login
+   → Check you have Expo account at https://expo.dev
+   → Try: eas build --platform android --auto-submit
+
+5. Stuck on build?
+   → Check build status: eas build:list
+   → View logs: eas build:view --id <build-id>
+
+
+WHAT'S INSTALLED
+================
+
+After setup you have:
+
+Global Tools:
+  ✓ expo-cli (Expo command line)
+  ✓ eas-cli (Build & submit tool)
+
+Mobile App (/mobile):
+  ✓ React Native
+  ✓ Expo
+  ✓ Navigation
+  ✓ 5 screens ready
+
+Backend Server (/server):
+  ✓ Node.js/Express
+  ✓ All 60+ APIs
+  ✓ Multiplayer systems
+
+Website (/website):
+  ✓ Next.js
+  ✓ React
+  ✓ 16 pages
+
+Desktop Client (/client):
+  ✓ WPF (Windows only)
+  ✓ Simple launcher option
+
+
+MONITORING BUILDS
+=================
+
+After you start a build:
+
+Check build status:
+  eas build:list
+
+View specific build:
+  eas build:view --id <build-id>
+
+View build logs:
+  eas build:logs --id <build-id>
+
+Download build:
+  eas build:download --id <build-id>
+
+
+AFTER APP IS LIVE
+==================
+
+Once your app is on stores:
+
+Android (Google Play):
+  - Share Google Play link with friends
+  - Link: https://play.google.com/store/apps/details?id=com.zamarplatform.zamar
+
+iOS (App Store):
+  - Share App Store link with friends
+  - Link: https://apps.apple.com/app/zamar/...
+  - (ID will be given when approved)
+
+Users can:
+  - Search "Zamar" in App Store/Google Play
+  - Download for free
+  - Sign in with account
+  - Play immediately
+
+
+WHAT'S DIFFERENT IN MOBILE vs DESKTOP
+======================================
+
+Mobile App:
+  ✓ Runs on iOS and Android
+  ✓ Touch interface
+  ✓ Bottom tab navigation
+  ✓ Works offline (partially)
+  ✓ Battery optimized
+  ✓ Smaller download (30-50MB)
+  ✓ Simple, fast
+  ✓ No modern effects
+
+Desktop Launcher:
+  ✓ Windows only
+  ✓ Keyboard/mouse interface
+  ✓ Window-based navigation
+  ✓ Full features
+  ✓ Simple UI option available
+  ✓ Direct file access
+  ✓ Larger (50-80MB)
+  ✓ More detailed graphics
+
+
+SHARE WITH FRIENDS
+===================
+
+Once on App Stores:
+
+1. Share App Store link
+   "Download Zamar from App Store"
+
+2. Share Google Play link
+   "Download Zamar from Google Play"
+
+3. Share web link
+   "Play online at zamar.app"
+
+3. Share with QR code (if custom domain)
+   Scan → Downloads app
+
+Friends can now:
+  - Find and download app
+  - Create account
+  - Join your games
+  - Play together
+
+
+NEED HELP?
+==========
+
+Check these files:
+  DEPLOYMENT_SETUP.sh   (Linux/Mac setup script)
+  DEPLOYMENT_SETUP.bat  (Windows setup script)
+  MOBILE_APP_GUIDE.txt  (Detailed mobile guide)
+  INSTALLATION.txt      (Full installation guide)
+  QUICK_REFERENCE.txt   (Command reference)
+
+Online Resources:
+  Expo: https://docs.expo.dev
+  React Native: https://reactnative.dev
+  EAS: https://eas.expo.dev
+  GitHub: https://github.com/expo/expo
+
+
+================================================================================

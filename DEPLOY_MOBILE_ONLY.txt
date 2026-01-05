@@ -1,0 +1,321 @@
+================================================================================
+                    ZAMAR - MOBILE APP DEPLOYMENT ONLY
+================================================================================
+
+IMPORTANT: Deploy Mobile App Only
+==================================
+
+✓ Deploy: Mobile app (/mobile)
+✗ DO NOT deploy: Website (/website) 
+✗ DO NOT deploy: Server (/server)
+
+The website and server are already built and running. You only need to 
+deploy the MOBILE APP to the App Stores.
+
+
+WHAT WAS FIXED
+==============
+
+1. ✓ Created eas.json in /mobile folder
+   - Tells EAS how to build your mobile app
+   - Configures iOS and Android settings
+   - Ready for app store deployment
+
+2. ✓ Fixed server dependency issue
+   - jsonwebtoken version locked to 9.1.2
+   - No more version conflicts
+   - Server will work fine
+
+
+STEP 1: CREATE EXPO ACCOUNT (FREE)
+==================================
+
+Visit: https://expo.dev
+
+1. Click "Sign Up"
+2. Enter email
+3. Create password
+4. Verify email
+5. Done! (takes 5 minutes)
+
+
+STEP 2: LOGIN TO EXPO IN TERMINAL
+==================================
+
+Windows PowerShell or Mac/Linux Terminal:
+
+expo login
+
+When prompted:
+  Email or username: [your-email-from-step-1]
+  Password: [your-password]
+
+Should say: "✓ Logged in as [your-email]"
+
+
+STEP 3: GO TO MOBILE FOLDER
+==========================
+
+cd /workspaces/Zamar/mobile
+
+NOT the website folder, NOT the server folder, ONLY the mobile folder
+
+
+STEP 4: BUILD FOR APP STORES
+============================
+
+Build for Android (Google Play):
+  eas build --platform android
+
+Build for iOS (App Store):
+  eas build --platform ios
+
+Build for BOTH (Recommended):
+  eas build --platform all
+
+Will take 10-30 minutes. EAS will show progress in terminal.
+
+
+STEP 5: WAIT FOR BUILD TO COMPLETE
+===================================
+
+You'll see:
+  ✓ Build started
+  → Build in progress...
+  ✓ Build completed!
+  → Download at: [link]
+
+The build is stored on EAS servers, NOT your computer.
+
+
+STEP 6: SUBMIT TO APP STORES
+============================
+
+IMPORTANT: You need developer accounts for this
+
+Android (Google Play):
+  1. Create account at: https://play.google.com/apps/publish
+  2. Pay $25 one-time fee
+  3. Run: eas submit --platform android
+  4. EAS will guide you through submission
+
+iOS (App Store):
+  1. Create account at: https://developer.apple.com
+  2. Pay $99/year fee
+  3. Run: eas submit --platform ios
+  4. EAS will guide you through submission
+
+Without accounts:
+  eas build --platform all    ← Just builds
+  (Don't run eas submit)
+  (Can test locally with Expo Go first)
+
+
+STEP 7: TEST LOCALLY FIRST (RECOMMENDED)
+========================================
+
+Before submitting to stores, test on your phone:
+
+1. Make sure in /mobile folder:
+   cd /mobile
+
+2. Start dev server:
+   expo start
+
+3. On your phone:
+   - Download Expo Go app (free)
+   - Scan QR code from terminal
+   - App loads and works
+   - Test all features
+
+4. If works, then submit to stores:
+   eas build --platform all
+
+
+FULL WORKFLOW
+=============
+
+1. Create Expo account
+   https://expo.dev
+
+2. Login
+   expo login
+
+3. Go to mobile
+   cd /workspaces/Zamar/mobile
+
+4. Test locally (optional but recommended)
+   expo start
+   (Scan with Expo Go)
+
+5. Build for stores
+   eas build --platform all
+
+6. Get developer accounts
+   Google Play: $25 (one-time)
+   App Store: $99 (yearly)
+
+7. Submit to stores
+   eas submit --platform all
+
+8. Wait for approval
+   Android: 24-48 hours
+   iOS: 1-5 days
+
+9. Check status
+   Google Play Console
+   App Store Connect
+
+10. Share link with friends
+    Google Play: https://play.google.com/store/apps/details?id=...
+    App Store: https://apps.apple.com/app/...
+
+
+WHAT HAPPENS NEXT
+=================
+
+While your app is being reviewed:
+
+1. Update descriptions (on app store consoles)
+2. Add screenshots
+3. Add privacy policy
+4. Answer content questions
+5. Wait for approval
+
+Once approved:
+  - Your app appears in stores
+  - Friends can search and download
+  - Users create accounts
+  - Play together!
+
+
+TROUBLESHOOTING
+===============
+
+"expo login" fails
+  Error: "Your username, email, or password was incorrect"
+  
+  Solution:
+    1. Go to https://expo.dev
+    2. Click "Forgot password"
+    3. Reset password
+    4. Try login again: expo login
+    5. Verify email if needed
+
+"eas build" fails
+  Error: "eas.json not found"
+  
+  Solution:
+    ✓ Already fixed! eas.json is created in /mobile
+    Make sure you're in /mobile folder:
+      cd /workspaces/Zamar/mobile
+
+"Can't find mobile folder"
+  Error: "bash: cd: mobile: No such file or directory"
+  
+  Solution:
+    Go to Zamar folder first:
+      cd /workspaces/Zamar
+    Then go to mobile:
+      cd mobile
+    Confirm you're there:
+      pwd
+      (should show: /workspaces/Zamar/mobile)
+
+"Build takes too long"
+  Normal: 10-30 minutes
+  Very normal to seem stuck for 10+ minutes
+  DON'T close terminal, let it finish
+  
+  If still stuck after 1 hour:
+    Ctrl+C to stop
+    Try again: eas build --platform all
+
+"Submission fails"
+  Error: Usually means missing developer account
+  
+  Solution:
+    - Google Play: Create account at play.google.com/apps/publish
+    - App Store: Create account at developer.apple.com
+    - Pay fees
+    - Follow eas submit prompts
+
+
+FOLDER STRUCTURE
+================
+
+✓ Deploy FROM:  /workspaces/Zamar/mobile
+✗ Don't deploy:  /workspaces/Zamar/website
+✗ Don't deploy:  /workspaces/Zamar/server
+
+Make sure you're in mobile folder before running eas commands:
+  cd /workspaces/Zamar/mobile
+  pwd   (should show: /workspaces/Zamar/mobile)
+
+
+QUICK REFERENCE
+===============
+
+Create Expo account: https://expo.dev
+Login: expo login
+Go to mobile: cd /workspaces/Zamar/mobile
+Test locally: expo start
+Build all: eas build --platform all
+Submit all: eas submit --platform all
+Check status: eas build:list
+View build logs: eas build:logs --id [build-id]
+
+
+IMPORTANT NOTES
+===============
+
+1. Only deploy mobile app
+   - Website runs separately
+   - Server runs separately
+   - Mobile app is what goes to App Stores
+
+2. Expo account is free
+   - But Apple/Google developer accounts cost money
+   - Android: $25 one-time
+   - iOS: $99 per year
+
+3. eas.json is ready
+   - Automatically created in /mobile
+   - Tells EAS how to build your app
+   - Don't delete or modify
+
+4. Test first
+   - Use Expo Go app to test locally
+   - Make sure everything works
+   - Then submit to stores
+
+5. Approval takes time
+   - Android: 24-48 hours (usually)
+   - iOS: 1-5 days (sometimes 1-2 weeks)
+   - Don't worry if slow
+
+
+NEXT STEPS
+==========
+
+1. Read this entire file
+2. Create Expo account at https://expo.dev
+3. Login: expo login
+4. Test locally: cd mobile && expo start
+5. Build: eas build --platform all
+6. Submit: eas submit --platform all
+7. Wait for approval
+8. Share with friends!
+
+
+QUESTIONS?
+==========
+
+Expo Docs: https://docs.expo.dev
+EAS Build: https://eas.expo.dev
+React Native: https://reactnative.dev
+GitHub: https://github.com/expo/expo
+
+
+Good luck! 🚀
+================================================================================

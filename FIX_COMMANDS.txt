@@ -1,0 +1,322 @@
+================================================================================
+                    ZAMAR - FIX TERMINAL COMMANDS
+================================================================================
+
+THE PROBLEM
+===========
+
+Commands weren't working because:
+  1. Expo CLI wasn't installed globally
+  2. EAS CLI wasn't installed globally  
+  3. npm scripts called non-existent commands
+  4. Missing Node.js/npm dependencies
+
+
+THE SOLUTION
+============
+
+Run these commands ONE AT A TIME in terminal:
+
+
+STEP 1: Install Global Tools
+============================
+
+Windows PowerShell (as Administrator):
+  npm install -g expo-cli@latest
+  npm install -g eas-cli@latest
+
+Linux/Mac (Terminal):
+  sudo npm install -g expo-cli@latest
+  sudo npm install -g eas-cli@latest
+
+
+STEP 2: Install Mobile App Dependencies
+========================================
+
+cd mobile
+npm install
+npm install --save-dev @react-navigation/native @react-navigation/bottom-tabs
+
+
+STEP 3: Install Server Dependencies
+====================================
+
+cd ../server
+npm install
+
+
+STEP 4: Install Website Dependencies
+=====================================
+
+cd ../website
+npm install
+
+
+STEP 5: Verify Everything Works
+===============================
+
+Check tools are installed:
+  expo --version
+  eas --version
+  node --version
+  npm --version
+
+Should show version numbers like "expo@48.0.0"
+
+
+NOW YOU CAN USE THESE COMMANDS
+==============================
+
+Mobile App:
+  cd mobile
+  expo start                    ← Start dev server
+  expo start --android         ← Start Android emulator
+  expo start --ios             ← Start iOS emulator
+  eas build --platform android ← Build for Google Play
+  eas build --platform ios     ← Build for App Store
+  eas build --platform all     ← Build both
+
+Server:
+  cd server
+  npm start                     ← Start backend
+
+Website:
+  cd website
+  npm run dev                   ← Start website dev
+
+
+SIMPLE TEST FLOW
+================
+
+1. Install Expo/EAS:
+   npm install -g expo-cli@latest
+   npm install -g eas-cli@latest
+
+2. Go to mobile:
+   cd mobile
+
+3. Install dependencies:
+   npm install
+
+4. Start app:
+   expo start
+
+5. On your phone:
+   - Download Expo Go app
+   - Scan QR code
+   - App loads
+
+
+IF YOU GET "command not found"
+=============================
+
+expo not found?
+  npm install -g expo-cli@latest
+  expo --version
+
+eas not found?
+  npm install -g eas-cli@latest
+  eas --version
+
+npm not found?
+  Install Node.js from nodejs.org
+  Then: npm --version
+
+node not found?
+  Install Node.js from nodejs.org
+  Then: node --version
+
+After installing, RESTART terminal and try again
+
+
+FULL SETUP (Copy & Paste)
+=========================
+
+For Windows (Run in PowerShell as Admin):
+-------------------------------------------
+
+npm install -g expo-cli@latest
+npm install -g eas-cli@latest
+cd C:\Users\YourUsername\path\to\Zamar
+cd mobile
+npm install
+cd ..\server
+npm install
+cd ..\website
+npm install
+echo "Done! Now cd mobile && expo start"
+
+
+For Mac/Linux (Run in Terminal):
+--------------------------------
+
+sudo npm install -g expo-cli@latest
+sudo npm install -g eas-cli@latest
+cd /path/to/Zamar
+cd mobile
+npm install
+cd ../server
+npm install
+cd ../website
+npm install
+echo "Done! Now cd mobile && expo start"
+
+
+WHAT EACH COMMAND DOES
+=======================
+
+npm install -g expo-cli
+  → Installs Expo CLI globally (worldwide)
+  → Lets you use "expo" command anywhere
+  → One-time install
+
+npm install -g eas-cli
+  → Installs EAS CLI globally (worldwide)
+  → Lets you use "eas" command anywhere
+  → One-time install
+
+cd mobile
+  → Goes to mobile folder
+  → Must do this before running mobile commands
+
+npm install
+  → Installs node_modules folder
+  → Downloads all dependencies
+  → Takes 2-5 minutes first time
+
+expo start
+  → Starts development server
+  → Shows QR code in terminal
+  → Scan with Expo Go on phone
+  → Press 'a' for Android, 'i' for iOS
+
+eas build --platform all
+  → Builds app for iOS and Android
+  → Creates app installers
+  → Takes 10-30 minutes
+  → Requires Expo account
+
+
+TROUBLESHOOTING
+===============
+
+"command not found: npm"
+  Problem: Node.js not installed
+  Solution: Install from https://nodejs.org/
+  Then: Close terminal and open new one
+  Then: npm --version
+
+"command not found: expo"
+  Problem: Expo CLI not installed
+  Solution: npm install -g expo-cli@latest
+  Then: Close terminal and open new one
+  Then: expo --version
+
+"command not found: eas"
+  Problem: EAS CLI not installed
+  Solution: npm install -g eas-cli@latest
+  Then: Close terminal and open new one
+  Then: eas --version
+
+npm install fails
+  Solution 1: cd mobile && rm -rf node_modules && npm install
+  Solution 2: npm cache clean --force
+  Solution 3: Update npm: npm install -g npm@latest
+
+expo start not working
+  Solution 1: cd mobile && npm install
+  Solution 2: expo login (create account at expo.dev)
+  Solution 3: expo start --clear
+
+Can't scan QR code
+  Problem: Phone not on same WiFi as computer
+  Solution 1: Connect to same WiFi network
+  Solution 2: Use USB cable: expo start --tunnel
+
+
+COMMANDS THAT NOW WORK
+======================
+
+These will work after you install Expo and EAS:
+
+expo start             → Start mobile app development
+expo start --android  → Test on Android emulator
+expo start --ios      → Test on iOS simulator
+eas build --platform android  → Build for Google Play
+eas build --platform ios      → Build for App Store
+eas build --platform all      → Build for both stores
+eas submit --platform all     → Submit to both stores
+eas build:list               → See your builds
+eas build:view --id <id>     → View specific build
+
+
+VISUAL WALKTHROUGH
+==================
+
+Step 1: Install Tools
+  Terminal: npm install -g expo-cli@latest
+  Terminal: npm install -g eas-cli@latest
+
+Step 2: Go to Mobile
+  Terminal: cd mobile
+
+Step 3: Install Mobile Deps
+  Terminal: npm install
+  (Wait 2-5 minutes)
+
+Step 4: Start App
+  Terminal: expo start
+  (See QR code)
+
+Step 5: Scan with Phone
+  Phone: Open Expo Go app
+  Phone: Tap "Scan QR Code"
+  Phone: Point at terminal QR code
+  Phone: Wait for app to load (30 seconds)
+  Phone: See Zamar app running!
+
+Step 6: Build for Stores
+  Terminal: eas build --platform all
+  (Wait 10-30 minutes)
+
+Step 7: Submit to Stores
+  Terminal: eas submit --platform all
+  (Waits for approval)
+
+Step 8: Check Status
+  Browser: Google Play Console
+  Browser: App Store Connect
+  (Check approval status)
+
+Step 9: Share with Friends
+  Friend: Open Google Play Store
+  Friend: Search "Zamar"
+  Friend: Download and play!
+
+
+QUICK ONE-LINER SETUP
+=====================
+
+Windows (PowerShell):
+  npm install -g expo-cli@latest && npm install -g eas-cli@latest && cd mobile && npm install && expo start
+
+Mac/Linux (Terminal):
+  sudo npm install -g expo-cli@latest && sudo npm install -g eas-cli@latest && cd mobile && npm install && expo start
+
+
+THAT'S IT!
+==========
+
+After these steps:
+  ✓ Mobile app works
+  ✓ Can test on phone
+  ✓ Can build for stores
+  ✓ Can share with friends
+  ✓ All commands work
+
+Any issues?
+  Check the "TROUBLESHOOTING" section above
+  Or ask for help
+
+Good luck! 🚀
+================================================================================
